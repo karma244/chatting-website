@@ -118,6 +118,16 @@
     min-height: 40px;
     border-radius: 10px;
   }
+  .message > .message-time {
+    margin: 0;
+    font-size: 18px;
+    margin-left: 320px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    border-radius: 10px;
+  }
 }
 @media (min-width: 1700px) {
   .join-from {
@@ -235,6 +245,16 @@
     padding: 10px;
     box-sizing: border-box;
     background-color: rgb(137, 178, 231);
+    min-height: 40px;
+    border-radius: 10px;
+  }
+  .message > .message-time {
+    margin: 0;
+    font-size: 18px;
+    margin-left: 370px;
+    width: 100%;
+    display: flex;
+    align-items: center;
     min-height: 40px;
     border-radius: 10px;
   }

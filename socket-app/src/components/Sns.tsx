@@ -4,28 +4,30 @@ import url from 'url'
 import { useLocation } from "react-router-dom";
 const ENDPOINT = "http://59.7.54.86:4001/";
 
-interface Message { name: string, message: string }
+interface Message { name: string, message: string, time: string }
 const App = () => {
   const [messageList, setMessageList] = React.useState<Message[]>([]);
   const [value, setValue] = React.useState('');
+  const [time, setTime] = useState('')
   const socket = socketIOClient(ENDPOINT);
-  
+
   let location = url.parse(useLocation().search, true);
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`)
     if (value.includes('!청소')) {
-      setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다` })})
+      setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다`, time: time })})
       setValue('')
       setMessageList([])
     }
     else {
-      socket.emit('send message', { name: location.query.name, message: value });
+      socket.emit('send message', { name: location.query.name, message: value, time: time });
       setValue('')
     }
   };
 
   useEffect(() => {
-    socket.on('receive message', (message: { name: string, message: string }) => {
+    socket.on('receive message', (message: { name: string, message: string, time: string }) => {
       setMessageList(messageList => messageList.concat(message));
     })
   }, []);
@@ -37,6 +39,7 @@ const App = () => {
           <div key={i} className="message">
             <p className="username">{item.name}</p>
             <p className="message-text">{item.message}</p>
+            <p className="message-time">{item.time}</p>
           </div>
         )}
       </div>
@@ -52,7 +55,7 @@ const App = () => {
           />
         </div>
         <button 
-        onClick={(e) => (!value ? (e.preventDefault(), alert('빈 문자열은 입력하실 수 없습니다')) : null)} 
+        onClick={(e) => (!value ? (e.preventDefault(), alert('빈 문자열은 입력하실 수 없습니다')) : setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`))} 
         type="submit">입력하기</button>
       </form>
     </div>

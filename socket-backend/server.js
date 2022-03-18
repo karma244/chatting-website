@@ -6,6 +6,7 @@ const index = require("./routes/index");
 
 const app = express();
 app.use(index);
+let time = `${new Date().getHours()} : ${new Date().getMinutes()}`
 
 const server = http.createServer(app);
 
@@ -21,12 +22,13 @@ io.on("connection", socket => {
   socket.on('join server', (item) => {
     var clientIPAddress = socket.request.connection.remoteAddress; 
     console.log(`${item.name}님의 IP : ${clientIPAddress}`)
-    setTimeout(() => {io.emit('receive message', {name:'NOTIFICATION', message:`${item.name}님이 들어왔습니다.`});}, 100)
+    setTimeout(() => {io.emit('receive message', {name:'NOTIFICATION', message:`${item.name}님이 들어왔습니다.`, time: time})}, 100)
   })
   socket.on('send message', (item) => {
     const msg = item.name + ' : ' + item.message;
+    console.log(item.time)
     console.log(msg);
-    io.emit('receive message', {name:item.name, message:item.message});
+    io.emit('receive message', {name:item.name, message:item.message, time: item.time});
   })
 });
 
