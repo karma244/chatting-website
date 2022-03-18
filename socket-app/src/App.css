@@ -86,16 +86,26 @@
   .chat-list {
     padding: 0 10px;
     border: 1px solid gray;
-    width: 400px; 
+    width: 410px; 
     margin-left: 5px;
     height: 700px;
     box-sizing: border-box;
     position: absolute; 
-    overflow: auto;
+    overflow-x: hidden;
     -ms-overflow-style: none;
   }
-  .chat-list::-webkit-scrollbar{ 
-    display:none; 
+  .chat-list::-webkit-scrollbar{
+    width: 20px;
+  }
+  .chat-list::-webkit-scrollbar-thumb{ 
+    background-color: #dadada; /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 4px solid transparent;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+  .chat-list::-webkit-scrollbar-track{ 
+    background-color: grey;
   }
   .message {
     min-height: 40px;
@@ -217,15 +227,25 @@
   .chat-list {
     padding: 0 10px;
     border: 1px solid gray;
-    width: 450px; 
+    width: 460px; 
     height: 960px;
     box-sizing: border-box;
     position: absolute; 
-    overflow: auto;
+    overflow-x: hidden;
     -ms-overflow-style: none;
   }
   .chat-list::-webkit-scrollbar{ 
-    display:none; 
+    width: 20px;
+  }
+  .chat-list::-webkit-scrollbar-thumb{ 
+    background-color: #dadada; /*스크롤바의 색상*/
+    background-clip: padding-box;
+    border: 4px solid transparent;
+    border-top-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+  .chat-list::-webkit-scrollbar-track{ 
+    background-color: grey;
   }
   .message {
     min-height: 40px;
