@@ -13,6 +13,11 @@ const App = () => {
 
   let location = url.parse(useLocation().search, true);
   const submit = (e: FormEvent<HTMLFormElement>) => {
+    if (location.query.name == null)
+    {
+      alert('가입을 먼저 해주세요!')
+      return;
+    }
     e.preventDefault();
     setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`)
     if (value.includes('!청소')) {

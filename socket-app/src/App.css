@@ -128,7 +128,7 @@
     border-radius: 10px;
   }
 }
-@media (min-width: 1700px) {
+@media (min-width: 1600px) {
   .join-from {
     text-align: center;
     margin: 0 auto
