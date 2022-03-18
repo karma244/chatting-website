@@ -2,7 +2,6 @@ import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import socketIOClient from "socket.io-client";
 import url from 'url'
 import { useLocation } from "react-router-dom";
-import axios from "axios";
 const ENDPOINT = "http://59.7.54.86:4001/";
 
 interface Message { name: string, message: string }
@@ -10,7 +9,7 @@ const App = () => {
   const [messageList, setMessageList] = React.useState<Message[]>([]);
   const [value, setValue] = React.useState('');
   const socket = socketIOClient(ENDPOINT);
-
+  
   let location = url.parse(useLocation().search, true);
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,10 +25,6 @@ const App = () => {
   };
 
   useEffect(() => {
-    
-  })
-
-  useEffect(() => {
     socket.on('receive message', (message: { name: string, message: string }) => {
       setMessageList(messageList => messageList.concat(message));
     })
@@ -37,13 +32,13 @@ const App = () => {
 
   return (
     <div>
-        <div className="chat-list">
-          {messageList.map((item: Message, i: number) =>
-            <div key={i} className="message">
-              <p className="username">{item.name}</p>
-              <p className="message-text">{item.message}</p>
-            </div>
-          )}
+      <div className="chat-list">
+        {messageList.map((item: Message, i: number) =>
+          <div key={i} className="message">
+            <p className="username">{item.name}</p>
+            <p className="message-text">{item.message}</p>
+          </div>
+        )}
       </div>
       <form className="chat-form"
         onSubmit={(e: FormEvent<HTMLFormElement>) => submit(e)}>

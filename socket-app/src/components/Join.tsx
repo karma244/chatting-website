@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "http://59.7.54.86:4001/";
 
+
 function App() {
   const [name, setName] = React.useState('');
   const socket = socketIOClient(ENDPOINT);
@@ -16,6 +17,7 @@ function App() {
   }
 
   return (
+    <div className="container">
     <form className="join-from"
       onSubmit={(e: FormEvent<HTMLFormElement>) => submit(e)}>
       <div className="join-inputs">
@@ -31,6 +33,8 @@ function App() {
           <button className="join-button" type="submit" onClick={() => (!name ? null : EventJoin())}>가입하기</button>
       </Link>
     </form>
+    </div>
+
   );
 }
 
