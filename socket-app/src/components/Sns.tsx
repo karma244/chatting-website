@@ -55,6 +55,7 @@ const App = () => {
           />
         </div>
         <button 
+        className="btn btn-primary"
         onClick={(e) => (!value ? (e.preventDefault(), alert('빈 문자열은 입력하실 수 없습니다')) : setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`))} 
         type="submit">입력하기</button>
       </form>
