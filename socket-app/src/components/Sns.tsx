@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import socketIOClient from "socket.io-client";
 import url from 'url'
 import { useLocation } from "react-router-dom";
@@ -6,9 +6,10 @@ const ENDPOINT = "http://14.38.184.22:4001/";
 
 interface Message { name: string, message: string, time: string }
 const App = () => {
-  const [messageList, setMessageList] = React.useState<Message[]>([]);
-  const [value, setValue] = React.useState('');
+  const [messageList, setMessageList] = useState<Message[]>([]);
+  const [value, setValue] = useState('');
   const [time, setTime] = useState('');
+  const [name, setName] = useState('');
   const socket = socketIOClient(ENDPOINT);
 
   let location = url.parse(useLocation().search, true);
@@ -50,6 +51,19 @@ const App = () => {
       </div>
       <form className="chat-form"
         onSubmit={(e: FormEvent<HTMLFormElement>) => submit(e)}>
+        <div className="chat-inputs">
+          <input
+            type="text"
+            autoComplete="off"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            value={name}
+            placeholder="닉네임 변경..."
+          />
+        </div>
+        <button 
+        className="btn btn-primary"
+        onClick={(e) => (!name ? (e.preventDefault(), alert('닉네임은 공백이 아닙니다.')) : setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`))} 
+        type="submit">입력하기</button>
         <div className="chat-inputs">
           <input
             type="text"

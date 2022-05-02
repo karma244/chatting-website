@@ -24,7 +24,7 @@ io.on("connection", socket => {
     console.log(`${user.name}님의 IP : ${clientIPAddress}`)
     setTimeout(() => {io.emit('receive message', {
       name:'NOTIFICATION', 
-      message:`${user.name}님이 들어왔습니다.`, 
+      message:`${user.name}님이 들어왔습니다.`,
       time: `${new Date().getHours()} : ${new Date().getMinutes()}`})}, 100)
   })
   socket.on('send message', (item) => {

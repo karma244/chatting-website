@@ -36,22 +36,19 @@
     background-color: #03c75a;
   }
   .chat-form {
+    flex:9;
     text-align: center;
-    height: 100%;
-    display: flex;
+    display: none;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
   }
   .chat-form > .chat-inputs {
-    margin-top: 720px;
-    flex: 8;
+    flex: 7;
     display: flex;
-    height: 100%;
   }
   .chat-inputs > input {
     flex: 1;
-    height: 100%;
     border: 1px solid rgb(141, 139, 139);
     font-size: 18px;
     outline: none;
