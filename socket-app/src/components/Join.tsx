@@ -1,7 +1,7 @@
 import React, { FormEvent, ChangeEvent, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://14.38.139.193:4001/";
+const ENDPOINT = "http://14.38.184.22:4001/";
 
 
 function App() {

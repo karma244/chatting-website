@@ -12,15 +12,14 @@ const server = http.createServer(app);
 
 const io = socketIo(server, {
   cors: {
-    origin: "http://14.38.139.193:3000",
+    origin: "http://14.38.184.22:3000",
     methods: ["GET", "POST"]
   }
 });
 
 io.on("connection", socket => {
-  socket.on('join server', (item, callback) => {
-    const { error, user } = addUser({ id:socket.id, name: item.name })
-    if (error) callback({ error: 'ERROR' })
+  socket.on('join server', (item) => {
+    const { user } = addUser({ id:socket.id, name: item.name })
     var clientIPAddress = socket.request.connection.remoteAddress; 
     console.log(`${user.name}님의 IP : ${clientIPAddress}`)
     setTimeout(() => {io.emit('receive message', {

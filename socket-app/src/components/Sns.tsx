@@ -2,13 +2,13 @@ import React, { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import socketIOClient from "socket.io-client";
 import url from 'url'
 import { useLocation } from "react-router-dom";
-const ENDPOINT = "http://14.38.139.193:4001/";
+const ENDPOINT = "http://14.38.184.22:4001/";
 
 interface Message { name: string, message: string, time: string }
 const App = () => {
   const [messageList, setMessageList] = React.useState<Message[]>([]);
   const [value, setValue] = React.useState('');
-  const [time, setTime] = useState('')
+  const [time, setTime] = useState('');
   const socket = socketIOClient(ENDPOINT);
 
   let location = url.parse(useLocation().search, true);

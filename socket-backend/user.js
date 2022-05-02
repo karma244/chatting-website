@@ -4,13 +4,6 @@ const addUser = ({ id, name }) => {
 //이름의 공백 제거
   name = name.trim().toLowerCase()
 
-  const existingUser = users.find(
-    (user) => user.name === name
-  )
-
-  if (!name ) return { error: '사용자 이름이 필요합니다.' }
-  if (existingUser) return { error: '이미 사용중인 이름입니다.' }
-
   const user = { id, name }
 
   users.push(user)
