@@ -1,36 +1,41 @@
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
 import socketIOClient from "socket.io-client";
-import url from 'url'
-import { useLocation } from "react-router-dom";
-const ENDPOINT = "http://14.38.184.22:4001/";
+import config from './config.json'
+const ENDPOINT = "http://172.30.1.91:4001/";
 
 interface Message { name: string, message: string, time: string }
 const App = () => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [value, setValue] = useState('');
-  const [time, setTime] = useState('');
   const [name, setName] = useState('');
   const socket = socketIOClient(ENDPOINT);
 
-  let location = url.parse(useLocation().search, true);
   const submit = (e: FormEvent<HTMLFormElement>) => {
-    if (location.query.name == null)
+    if (config.name == null)
     {
       alert('가입을 먼저 해주세요!')
       return;
     }
     e.preventDefault();
-    setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`)
+  };
+
+  const sendMSG = () => {
     if (value.includes('!청소')) {
-      setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다`, time: time })})
+      setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다`, time: `${new Date().getHours()} : ${new Date().getMinutes()}` })})
       setValue('')
       setMessageList([])
     }
     else {
-      socket.emit('send message', { name: location.query.name, message: value, time: time });
+      socket.emit('send message', { name: config.name, message: value, time: `${new Date().getHours()} : ${new Date().getMinutes()}` });
       setValue('')
     }
-  };
+  }
+
+  const changeName = () => {
+    config.name = name;
+    socket.emit('changed name', {name : name});
+    alert(`닉네임이 ${config.name}으로 변경되었어요.`)
+  }
 
   useEffect(() => {
     socket.on('receive message', (message: { name: string, message: string, time: string }) => {
@@ -55,19 +60,6 @@ const App = () => {
           <input
             type="text"
             autoComplete="off"
-            onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
-            value={name}
-            placeholder="닉네임 변경..."
-          />
-        </div>
-        <button 
-        className="btn btn-primary"
-        onClick={(e) => (!name ? (e.preventDefault(), alert('닉네임은 공백이 아닙니다.')) : setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`))} 
-        type="submit">입력하기</button>
-        <div className="chat-inputs">
-          <input
-            type="text"
-            autoComplete="off"
             onChange={(e: ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
             value={value}
             placeholder="메시지 입력"
@@ -75,8 +67,21 @@ const App = () => {
         </div>
         <button 
         className="btn btn-primary"
-        onClick={(e) => (!value ? (e.preventDefault(), alert('빈 문자열은 입력하실 수 없습니다')) : setTime(`${new Date().getHours()} : ${new Date().getMinutes()}`))} 
+        onClick={() => (!value ? null : sendMSG())} 
         type="submit">입력하기</button>
+        <div className="chat-inputs">
+          <input
+            type="text"
+            autoComplete="off"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+            value={name}
+            placeholder="닉네임 변경"
+          />
+        </div>
+        <button 
+        className="btn btn-primary"
+        onClick={(e) => (!name.trim() ? (e.preventDefault(), alert('닉네임은 공백이 아닙니다.')) : changeName())} 
+        type="button">바꾸기</button>
       </form>
     </div>
   );

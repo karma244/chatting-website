@@ -1,7 +1,8 @@
 import React, { FormEvent, ChangeEvent, useEffect } from "react";
 import { Link } from 'react-router-dom'
 import socketIOClient from "socket.io-client";
-const ENDPOINT = "http://14.38.184.22:4001/";
+import config from './config.json'
+const ENDPOINT = "http://172.30.1.91:4001/";
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
           placeholder="유저이름"
         />
       </div>
-      <Link onClick={(e) => (!name ? (e.preventDefault(), alert('닉네임을 설정 해주세요')) : null)} to={`/SNS?name=${name}`}>
+      <Link onClick={(e) => (!name.trim() ? (e.preventDefault(), alert('닉네임을 설정 해주세요')) : config.name = name)} to={`/SNS`}>
           <button className="join-button" type="submit" onClick={() => (!name ? null : EventJoin())}>가입하기</button>
       </Link>
     </form>
