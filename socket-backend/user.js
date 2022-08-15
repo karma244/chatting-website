@@ -22,4 +22,10 @@ const getUserName = (id) => {
   return found.name;
 }
 
-module.exports = { addUser, removeUser, getUserName }
+const changeUserName = (id, name) => {
+  const index = users.findIndex((user) => user.id === id)
+  
+  if (index !== -1) return users[index].name = name;
+} 
+
+module.exports = { addUser, removeUser, getUserName, changeUserName }

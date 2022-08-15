@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-const { addUser, removeUser, getUserName } = require('./user');
+const { addUser, removeUser, getUserName, changeUserName } = require('./user');
 const port = process.env.PORT || 4001;
 const index = require("./routes/index");
 
@@ -37,6 +37,7 @@ io.on("connection", socket => {
   socket.on('changed name', (item) => {
     const name = getUserName(id);
     nickName = item.name;
+    changeUserName(id, nickName);
     setTimeout(() => {io.emit('receive message', {
       name:'NOTIFICATION', 
       message:`${name}님이 ${item.name}로(으로) 이름 바꿈`,

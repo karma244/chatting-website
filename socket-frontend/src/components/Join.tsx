@@ -34,7 +34,7 @@ function App() {
         />
       </div>
       <Link onClick={(e) => (!name.trim() ? (e.preventDefault(), alert('닉네임을 설정 해주세요')) : config.name = name)} to={`/SNS`}>
-          <button className="join-button" type="submit" onClick={() => (!name ? null : EventJoin())}>가입하기</button>
+          <button className="join-button" type="submit" onClick={() => (!name ? null : EventJoin())}>입장하기</button>
       </Link>
     </form>
     </div>
