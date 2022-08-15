@@ -19,6 +19,19 @@ const App = () => {
     e.preventDefault();
   };
 
+  const Submit = (e: FormEvent<HTMLFormElement>) => {
+    if (config.name == null)
+    {
+      alert('가입을 먼저 해주세요!')
+      return;
+    }
+    e.preventDefault();
+  };
+
+  const checkilegal = () => {
+    return config.name == "" ? true : false;
+  }
+
   const sendMSG = () => {
     if (value.includes('!청소')) {
       setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다`, time: `${new Date().getHours()} : ${new Date().getMinutes()}` })})
@@ -26,7 +39,7 @@ const App = () => {
       setMessageList([])
     }
     else {
-      if (config.name == "") {
+      if (checkilegal()) {
         alert("잘못된 접근을 하신 것 같습니다. 처음 페이지로 이동합니다.")
         window.location.replace("http://172.30.1.91:3000")
       }
@@ -38,9 +51,15 @@ const App = () => {
   }
 
   const changeName = () => {
-    config.name = name;
-    socket.emit('changed name', {name : name});
-    alert(`닉네임이 ${config.name}으로 변경되었어요.`)
+    if (checkilegal()) {
+      alert("잘못된 접근을 하신 것 같습니다. 처음 페이지로 이동합니다.")
+      window.location.replace("http://172.30.1.91:3000")
+    }
+    else {
+      config.name = name;
+      socket.emit('changed name', {name : name});
+      alert(`닉네임이 ${config.name}으로 변경되었어요.`)
+    }
   }
 
   useEffect(() => {
@@ -75,7 +94,11 @@ const App = () => {
         className="btn btn-primary"
         onClick={() => (!value ? null : sendMSG())} 
         type="submit">입력하기</button>
-        <div className="chat-inputs">
+      </form>
+      <div/>
+      <form className="nick-form"
+        onSubmit={(e: FormEvent<HTMLFormElement>) => Submit(e)}>
+        <div className="nick-inputs">
           <input
             type="text"
             autoComplete="off"
