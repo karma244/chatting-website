@@ -26,8 +26,14 @@ const App = () => {
       setMessageList([])
     }
     else {
-      socket.emit('send message', { name: config.name, message: value, time: `${new Date().getHours()} : ${new Date().getMinutes()}` });
-      setValue('')
+      if (config.name == "") {
+        alert("잘못된 접근을 하신 것 같습니다. 처음 페이지로 이동합니다.")
+        window.location.replace("http://172.30.1.91:3000")
+      }
+      else {
+        socket.emit('send message', { name: config.name, message: value, time: `${new Date().getHours()} : ${new Date().getMinutes()}` });
+        setValue('')
+      }
     }
   }
 

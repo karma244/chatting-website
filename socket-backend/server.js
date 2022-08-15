@@ -21,8 +21,8 @@ let id, nickName;
 
 io.on("connection", socket => {
   socket.on('join server', (item) => {
-    name = item.name, id = socket.request.connection.remoteAddress.split("ffff:")[1];
-    const { user } = addUser({ id:id, name: name });
+    nickName = item.name, id = socket.request.connection.remoteAddress.split("ffff:")[1];
+    const { user } = addUser({ id:id, name: nickName });
     console.log(`${user.name}님의 IP : ${id}`)
     setTimeout(() => {io.emit('receive message', {
       name:'NOTIFICATION', 

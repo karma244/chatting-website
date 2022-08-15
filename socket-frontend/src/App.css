@@ -38,17 +38,19 @@
   .chat-form {
     flex:9;
     text-align: center;
-    display: none;
+    display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
   }
   .chat-form > .chat-inputs {
-    flex: 7;
-    display: flex;
+    margin-top: 720px;
+    display:flex;
+    height: 100%;
   }
   .chat-inputs > input {
     flex: 1;
+    margin-top: 10px;
     border: 1px solid rgb(141, 139, 139);
     font-size: 18px;
     outline: none;
