@@ -7,6 +7,7 @@ interface Message { name: string, message: string, time: string }
 const App = () => {
   const [messageList, setMessageList] = useState<Message[]>([]);
   const [value, setValue] = useState('');
+  const [audio] = useState(new Audio('https://docs.google.com/uc?export=open&id=1A_8VQHCTEl_w33nxoKUmUWBTsPWZ19Ng'))
   const [name, setName] = useState('');
   const socket = socketIOClient(ENDPOINT);
 
@@ -37,6 +38,11 @@ const App = () => {
       setTimeout(() => {socket.emit('send message', { name: 'NOTIFICATION', message: `${messageList.length}만큼의 메세지가 삭제됐습니다`, time: `${new Date().getHours()} : ${new Date().getMinutes()}` })})
       setValue('')
       setMessageList([])
+    }
+    else if (value.includes('!노래재생')) {
+      audio.play();
+      audio.volume = 0.4;
+      setValue('')
     }
     else {
       if (checkilegal()) {
